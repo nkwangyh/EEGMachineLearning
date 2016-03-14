@@ -14,7 +14,7 @@ options = optimset('MaxIter', maxIter);
 error = 100;
 
 m = size(hidden_layer_size_batch, 2); n = size(lambda_batch, 2);
-% Save the validation result
+% Save the validation params and result
 nnValidationError = zeros(3, m*n);
 
 for i = 1:m
@@ -48,5 +48,6 @@ end
 fprintf('hiddenLayerSize  lambda  error\n');
 fprintf('%f %f %f\n', nnValidationError);
 
+fprintf('\nChosen hiddenLayerSize, lambda and error percent\n  %f  %f  %f\n', hidden_layer_size, lambda, error);
 end
 

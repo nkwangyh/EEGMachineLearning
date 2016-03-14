@@ -19,13 +19,11 @@ X = [ones(m, 1) X]; Xval = [ones(mval, 1) Xval]; Xtest = [ones(mtest, 1) Xtest];
 
 %% Do some visulization with the training result parameters
 % If possible, do some visualization
-% plotData(X, y); % hard for high dimensional data
+% plotData(X, y); % hard for high dimension data
 
 %% Validation
 % Adjust the parameters on the cross-validate set
 [lambda, maxIter] = LogisticRegValidateParams(X, y, Xval, yval);
-fprintf('The training result on cv set of logistic regression is ');
-fprintf('lambda = %f  maxIter = %f\n', lambda, maxIter);
 pause;
 
 %% Train the model

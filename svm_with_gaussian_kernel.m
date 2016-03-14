@@ -22,7 +22,6 @@ fprintf('\nTraining SVM with RBF Kernel (this may take 1 to 2 minutes) ...\n');
 
 %% Predict
 model = svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma));
-% model = svmTrain(X, y, C, @linearKernel, 1e-3, 20);
 p = svmPredict(model, Xtest);
 
 params = [C; sigma];

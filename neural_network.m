@@ -5,7 +5,8 @@ function [accuracy] = neural_network(X, y, Xval, yval, Xtest, ytest)
 %   row of y is the label of the same row sample of X. And the function
 %   return the training parameters and the accuracy.
 %% Load Data and Initialize Parameters
-% load data
+% change the label of negtive samples to 2 in order to vectorizing the
+% labels
 y(find(y == 0)) = 2;
 yval(find(yval == 0)) = 2;
 ytest(find(ytest == 0)) = 2;

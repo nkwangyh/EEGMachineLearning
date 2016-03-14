@@ -11,24 +11,16 @@ function [C, sigma] = gaussianSVMValidateParams(X, y, Xval, yval)
 C = 1;
 sigma = 0.3;
 
-% ====================== YOUR CODE HERE ======================
-% Instructions: Fill in this function to return the optimal C and sigma
-%               learning parameters found using the cross validation set.
-%               You can use svmPredict to predict the labels on the cross
-%               validation set. For example, 
-%                   predictions = svmPredict(model, Xval);
-%               will return the predictions on the cross validation set.
-%
-%  Note: You can compute the prediction error using 
-%        mean(double(predictions ~= yval))
-%
 % Passible values for C and sigma
 C_batch = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30]; sigma_batch = C_batch;
 % Train in SVM with the training set X, y
 fprintf('Searching for proper params...\n');
-fprintf('C    sigma    error\n');
 error = 100;
 m = size(C_batch, 2); n = size(sigma_batch, 2);
+
+% Save the params and results
+gaussianSVMValidationError = zeros(3, m*n);
+
 for i = 1:m
     C_temp = C_batch(i);
     for j = 1:n
@@ -36,14 +28,18 @@ for i = 1:m
         model= svmTrain(X, y, C_temp, @(x1, x2) gaussianKernel(x1, x2, sigma_temp));
         predictions = svmPredict(model, Xval);
         error_temp = mean(double(predictions ~= yval)) * 100;
-        fprintf(' %f    %f    %f\n', C_temp, sigma_temp, error_temp);
         if error_temp < error
             error = error_temp;
             C = C_temp;
             sigma = sigma_temp;
-        end        
+        end 
+        gaussianSVMValidationError(:, (i-1)*n + j) = [C_temp; sigma_temp; error_temp];
     end
 end
+fprintf('C    sigma    error\n');
+fprintf(' %f    %f    %f\n', gaussianSVMValidationError);
+
+fprintf('\nChosen C, sigma and error\n  %f  %f  %f\n', C, sigma, error);
 % =========================================================================
 
 end

@@ -55,15 +55,16 @@ yval = randdata(train_set_size+1: train_set_size+val_set_size, n+1);
 Xtest = randdata(train_set_size+val_set_size+1:m, 1:n);
 ytest = randdata(train_set_size+val_set_size+1:m, n+1);
 
+fprintf('Loading complete.\n');
 % disp(size(X)); disp(size(y));
 % disp(size(Xval));disp(size(yval));
 % disp(size(Xtest));disp(size(ytest));
 
 %% Train with logistic regression
-% fprintf('Training with logistic regression ...\n');
-% logistic_reg_res = logistic_regression(X, y, Xval, yval, Xtest, ytest);
-% fprintf('Logistic regression training result: %f\n', logistic_reg_res);
-% pause;
+fprintf('Training with logistic regression ...\n');
+logistic_reg_res = logistic_regression(X, y, Xval, yval, Xtest, ytest);
+fprintf('Logistic regression training result: %f\n', logistic_reg_res);
+pause;
 
 %% Train with Neural Network
 % fprintf('Training with Neural Network ...\n');

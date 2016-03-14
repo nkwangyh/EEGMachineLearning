@@ -6,6 +6,10 @@ mtry_batch = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
 error = 100;
 m = size(treeCnt_batch, 2); n = size(mtry_batch, 2);
+
+% Save the params and result
+rfValidationError = zeros(3, m*n);
+
 for i = 1:m
     treeCnt_temp = treeCnt_batch(i);
     for j = 1:n
@@ -20,9 +24,13 @@ for i = 1:m
             treeCnt = treeCnt_temp;
             mtry = mtry_temp;
         end
-        fprintf('treeCnt   mtry   error\n %f  %f  %f\n', treeCnt_temp, mtry_temp, error_temp);
+        rfValidationError(:, (i-1)*n + j) = [treeCnt_temp; mtry_temp; error_temp];
     end
 end
+fprintf('treeCnt   mtry   error\n');
+fprintf('  %f  %f  %f\n', rfValidationError);
+
+fprintf('\nChosen treeCnt, mtry and error percent\n  %f  %f  %f\n', treeCnt, mtry, error);
 
 end
 

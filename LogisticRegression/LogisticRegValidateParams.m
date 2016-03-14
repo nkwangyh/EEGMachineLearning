@@ -5,14 +5,17 @@ function [lambda, maxIter] = LogisticRegValidateParams(X, y, Xval, yval)
 lambda = 0.01;
 lambda_batch = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
 
-maxIter = 500;
+maxIter = 100;
 options = optimset('GradObj', 'on', 'MaxIter', maxIter);
 
 error = 1;
 n = size(X, 2);
 initial_theta = zeros(n, 1);
 m = size(lambda_batch, 2);
-fprintf('Logistic Regression: \n        lambda          error\n');
+
+% Save the validation params and result
+lrValidationError = zeros(2, m);
+
 for i = 1:m
     lambda_temp = lambda_batch(i);
     % Tune 'MaxIter' accroding to lambda, which means MaxIter should
@@ -26,8 +29,10 @@ for i = 1:m
         lambda = lambda_temp;
         error = error_temp;
     end
-    fprintf('        %f          %f\n', lambda_temp, error_temp);
+    lrValidationError(:, i) = [lambda_temp; error_temp];
 end
-
+fprintf('Logistic Regression: \n  lambda  error\n');
+fprintf('  %f  %f\n', lrValidationError);
+fprintf('\nChosen lambda, error percent and maxIter\n  %f  %f  %f\n', lambda, error, maxIter);
 end
 
