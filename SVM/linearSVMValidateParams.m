@@ -1,4 +1,4 @@
-function [C, sigma] = linearSVMValidateParams(X, y, Xval, yval)
+function [C] = linearSVMValidateParams(X, y, Xval, yval)
 %EX6PARAMS returns your choice of C and sigma for Part 3 of the exercise
 %where you select the optimal (C, sigma) learning parameters to use for SVM
 %with RBF kernel
@@ -31,10 +31,10 @@ end
 minItem = linearSVMValidationError(:, minIdx);
 C = minItem(1); error = minItem(2);
 
-fprintf('C    sigma    error\n');
-fprintf(' %f    %f    %f\n', linearSVMValidationError);
+fprintf('C    error\n');
+fprintf(' %f    %f\n', linearSVMValidationError);
 
-fprintf('\nChosen C and error\n  %f  %f  %f\n', C, error);
+fprintf('\nChosen C and error\n  %f  %f\n', C, error);
 % =========================================================================
 % Save the temporary result as a .mat file to simplify debugging and show
 % the primary result in a chart
