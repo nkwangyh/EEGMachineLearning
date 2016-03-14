@@ -7,43 +7,51 @@ function [C, sigma] = linearSVMValidateParams(X, y, Xval, yval)
 %   sigma based on a cross-validation set.
 %
 
-% You need to return the following variables correctly.
-C = 1;
-sigma = 0.3;
-
-% ====================== YOUR CODE HERE ======================
-% Instructions: Fill in this function to return the optimal C and sigma
-%               learning parameters found using the cross validation set.
-%               You can use svmPredict to predict the labels on the cross
-%               validation set. For example, 
-%                   predictions = svmPredict(model, Xval);
-%               will return the predictions on the cross validation set.
-%
-%  Note: You can compute the prediction error using 
-%        mean(double(predictions ~= yval))
-%
 % Passible values for C and sigma
-C_batch = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30]; sigma_batch = C_batch;
+C_batch = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
 % Train in SVM with the training set X, y
 fprintf('Searching for proper params...\n');
-fprintf('C    sigma    error\n');
-error = 1;
-m = size(C_batch, 2); n = size(sigma_batch, 2);
-for i = 1:m
+fprintf('C    error\n');
+
+m = size(C_batch, 2);
+
+% Save the params and results
+linearSVMValidationError = [];
+
+parfor i = 1:m
     C_temp = C_batch(i);
-    for j = 1:n
-        sigma_temp = sigma_batch(j);
-        model= svmTrain(X, y, C, @linearKernel, 1e-3, 20);
-        predictions = svmPredict(model, Xval);
-        error_temp = mean(double(predictions ~= yval));
-        fprintf(' %f    %f    %f\n', C_temp, sigma_temp, error_temp);
-        if error_temp < error
-            error = error_temp;
-            C = C_temp;
-            sigma = sigma_temp;
-        end        
-    end
+    model= svmTrain(X, y, C_temp, @linearKernel, 1e-3, 20);
+    predictions = svmPredict(model, Xval);
+    error_temp = mean(double(predictions ~= yval));
+        
+    linearSVMValidationError = [linearSVMValidationError, [C_temp; error_temp]];
 end
+
+[~, minIdx] = min(linearSVMValidationError(2, :));
+minItem = linearSVMValidationError(:, minIdx);
+C = minItem(1); error = minItem(2);
+
+fprintf('C    sigma    error\n');
+fprintf(' %f    %f    %f\n', linearSVMValidationError);
+
+fprintf('\nChosen C and error\n  %f  %f  %f\n', C, error);
 % =========================================================================
+% Save the temporary result as a .mat file to simplify debugging and show
+% the primary result in a chart
+
+% sort the error matrix using @sortrows and @unique. Return the lowest 5
+% columns for detailed tuning
+
+    % for SVM with gaussian kernel, since the two parameters C and sigma are
+    % both continous values. Find the lowest 5 columns and get a shrinked range
+    % for tuning
+
+    % for random forest, since the two parameters are both discreted values.
+    % Find the lowest 5 columns and get a shrinked range for tuning
+
+% the tuning function: take the range as parameters and return a final
+% tuning result and illustrate the result on grids
+
+% ========================================================
 
 end

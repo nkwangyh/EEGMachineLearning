@@ -8,6 +8,7 @@ addpath('NeuralNetwork/');
 addpath('SVM/');
 addpath('RandomForest/');
 addpath('data/');
+addpath('PlotValidationResult/');
 
 %% Load Data and Divide it into Train, Cross-validation and Test sets
 fprintf('Loading data ...\n');
@@ -61,10 +62,10 @@ fprintf('Loading complete.\n');
 % disp(size(Xtest));disp(size(ytest));
 
 %% Train with logistic regression
-fprintf('Training with logistic regression ...\n');
-logistic_reg_res = logistic_regression(X, y, Xval, yval, Xtest, ytest);
-fprintf('Logistic regression training result: %f\n', logistic_reg_res);
-pause;
+% fprintf('Training with logistic regression ...\n');
+% logistic_reg_res = logistic_regression(X, y, Xval, yval, Xtest, ytest);
+% fprintf('Logistic regression training result: %f\n', logistic_reg_res);
+% pause;
 
 %% Train with Neural Network
 % fprintf('Training with Neural Network ...\n');
@@ -78,10 +79,10 @@ pause;
 % fprintf('SVM with linear kernel training result: %f\n', svm_linear_res);
 % pause;
 
-% fprintf('Training with SVM with gaussian kernel ...\n');
-% svm_gaussian_res = svm_with_gaussian_kernel(X, y, Xval, yval, Xtest, ytest);
-% fprintf('SVM with gaussian kernel training result: %f\n', svm_gaussian_res);
-% pause;
+fprintf('Training with SVM with gaussian kernel ...\n');
+svm_gaussian_res = svm_with_gaussian_kernel(X, y, Xval, yval, Xtest, ytest);
+fprintf('SVM with gaussian kernel training result: %f\n', svm_gaussian_res);
+pause;
 
 %% Train with Random Forest
 % fprintf('Training with Random Forest ...\n');
