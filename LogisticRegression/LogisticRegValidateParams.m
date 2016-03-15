@@ -1,10 +1,8 @@
-function [lambda, maxIter] = LogisticRegValidateParams(X, y, Xval, yval)
+function [lambda, maxIter] = LogisticRegValidateParams(X, y, Xval, yval, maxIter, lambda_batch, ...
+    lrValidationErrorName, minItemName)
 %LOGISTICREGVALIDATEPARAMS Train the model on train set with different params
 % and test the result on cross validation set to return the best params.
 
-lambda_batch = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
-
-maxIter = 200;
 options = optimset('GradObj', 'on', 'MaxIter', maxIter);
 
 n = size(X, 2);
@@ -36,6 +34,8 @@ fprintf('\nChosen lambda, error percent and maxIter\n  %f  %f  %f\n', lambda, er
 % =========================================================================
 % Save the temporary result as a .mat file to simplify debugging and show
 % the primary result in a chart
+dlmwrite(lrValidationErrorName, lrValidationError, 'precision', 6, 'delimiter', ' ');
+dlmwrite(minItemName, minItem, 'precision', 6, 'delimiter', ' ');
 
 % sort the error matrix using @sortrows and @unique. Return the lowest 5
 % columns for detailed tuning

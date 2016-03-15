@@ -13,14 +13,13 @@ fprintf('\nTraining Linear SVM ...\n')
 
 %% Validation
 % Try different SVM Parameters here
-[C, sigma] = linearSVMValidateParams(X, y, Xval, yval);
+C = linearSVMValidateParams(X, y, Xval, yval);
 
 %% Predict
 model = svmTrain(X, y, C, @linearKernel, 1e-3, 20);
-% model = svmTrain(X, y, C, @linearKernel, 1e-3, 20);
 p = svmPredict(model, Xtest);
 
-params = [C; sigma];
+params = C;
 accuracy = mean(double(p == ytest)) * 100;
 
 fprintf('Training Accuracy: %f\n', accuracy);

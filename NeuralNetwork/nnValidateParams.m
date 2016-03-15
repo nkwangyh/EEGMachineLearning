@@ -1,11 +1,8 @@
-function [hidden_layer_size, lambda, maxIter] = nnValidateParams(X, y, Xval, yval, hidden_layer_size, input_layer_size, num_labels)
+function [hidden_layer_size, lambda, maxIter] = nnValidateParams(X, y, Xval, yval, hidden_layer_size, input_layer_size, num_labels, ...
+    maxIter, hidden_layer_size_batch, lambda_batch, ...
+    nnValidationErrorName, nnMinItemName)
 %NNVALIDATEPARAMS adjust the params on cross validation set and return the
 %params with highest accuracy
-
-hidden_layer_size_batch = [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28];
-lambda_batch = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
-
-maxIter = 100;
 
 options = optimset('MaxIter', maxIter);
 
@@ -45,7 +42,8 @@ fprintf('\nChosen hiddenLayerSize, lambda and error percent\n  %f  %f  %f\n', hi
 % =========================================================================
 % Save the temporary result as a .mat file to simplify debugging and show
 % the primary result in a chart
-
+dlmwrite(nnValidationErrorName, nnValidationError, 'precision', 6, 'delimiter', ' ');
+dlmwrite(nnMinItemName, minItem, 'precision', 6, 'delimiter', ' ');
 % sort the error matrix using @sortrows and @unique. Return the lowest 5
 % columns for detailed tuning
 

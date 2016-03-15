@@ -1,4 +1,4 @@
-function [C, sigma] = gaussianSVMValidateParams(X, y, Xval, yval)
+function [C, sigma] = gaussianSVMValidateParams(X, y, Xval, yval, C_batch, sigma_batch, gaussianSVMValidationErrorName, gaussianSVMMinItemName)
 %GAUSSIANSVMVALIDATEPARAMS returns your choice of C and sigma for Part 3 of the exercise
 %where you select the optimal (C, sigma) learning parameters to use for SVM
 %with RBF kernel
@@ -7,8 +7,6 @@ function [C, sigma] = gaussianSVMValidateParams(X, y, Xval, yval)
 %   sigma based on a cross-validation set.
 %
 
-% Passible values for C and sigma
-C_batch = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30]; sigma_batch = C_batch;
 % Train in SVM with the training set X, y
 fprintf('Searching for proper params...\n');
 
@@ -40,7 +38,8 @@ fprintf('\nChosen C, sigma and error\n  %f  %f  %f\n', C, sigma, error);
 
 % Save the temporary result as a .mat file to simplify debugging and show
 % the primary result in a chart
-
+dlmwrite(gaussianSVMValidationErrorName, gaussianSVMValidationError, 'precision', 6, 'delimiter', ' ');
+dlmwrite(gaussianSVMMinItemName, minItem, 'precision', 6, 'delimiter', ' ');
 % sort the error matrix using @sortrows and @unique. Return the lowest 5
 % columns for detailed tuning
 

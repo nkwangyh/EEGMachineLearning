@@ -22,8 +22,17 @@ X = [ones(m, 1) X]; Xval = [ones(mval, 1) Xval]; Xtest = [ones(mtest, 1) Xtest];
 % plotData(X, y); % hard for high dimension data
 
 %% Validation
-% Adjust the parameters on the cross-validate set
-[lambda, maxIter] = LogisticRegValidateParams(X, y, Xval, yval);
+% Tune the parameters on the cross-validate set. Iterate the following two functions for several times with
+% a coarse-to-fine processing to finally get a fine-tuned result
+lambda_batch = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
+maxIter = 200;
+[lambda, maxIter] = LogisticRegValidateParams(X, y, Xval, yval, maxIter, lambda_batch, 'lrValidationError.txt', 'lrMinItem.txt');
+lowestCnt = 4; paramCnt = 100;
+lambda_batch = tuningLogisticReg('lrValidationError.txt', 'lrMinItem.txt', lowestCnt, paramCnt);
+pause;
+[lambda, maxIter] = LogisticRegValidateParams(X, y, Xval, yval, maxIter, lambda_batch, 'lrValidationError1.txt', 'lrMinItem1.txt');
+lowestCnt = 4; paramCnt = 100;
+lambda_batch = tuningLogisticReg('lrValidationError1.txt', 'lrMinItem1.txt', lowestCnt, paramCnt);
 pause;
 
 %% Train the model

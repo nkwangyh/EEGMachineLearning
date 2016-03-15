@@ -24,7 +24,20 @@ lambda = 0.0001;            % weight decay parameter
 
 
 %% Validation
-[hidden_layer_size, lambda, maxIter] = nnValidateParams(X, y, Xval, yval, hidden_layer_size, input_layer_size, num_labels);
+
+hidden_layer_size_batch = [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28];
+lambda_batch = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
+maxIter = 100;
+[hidden_layer_size, lambda, maxIter] = nnValidateParams(X, y, Xval, yval, hidden_layer_size, input_layer_size, num_labels, ...
+    maxIter, hidden_layer_size_batch, lambda_batch, 'nnValidationError.txt', 'nnMinItem.txt');
+lowestCnt = 4; paramCnt = 50;
+[hidden_layer_size_batch, lambda_batch] = tuningNeuralNetwork('nnValidationError.txt', 'nnMinItem.txt', lowestCnt, paramCnt);
+
+[hidden_layer_size, lambda, maxIter] = nnValidateParams(X, y, Xval, yval, hidden_layer_size, input_layer_size, num_labels, ...
+    maxIter, hidden_layer_size_batch, lambda_batch, 'nnValidationError1.txt', 'nnMinItem1.txt');
+lowestCnt = 4; paramCnt = 50;
+[hidden_layer_size_batch, lambda_batch] = tuningNeuralNetwork('nnValidationError1.txt', 'nnMinItem1.txt', lowestCnt, paramCnt);
+pause;
 
 %% Training NN
 fprintf('\nTraining Neural Network... \n');

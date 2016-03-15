@@ -8,7 +8,8 @@ addpath('NeuralNetwork/');
 addpath('SVM/');
 addpath('RandomForest/');
 addpath('data/');
-addpath('PlotValidationResult/');
+addpath('ParamsTuning/');
+addpath('tempData/');
 
 %% Load Data and Divide it into Train, Cross-validation and Test sets
 fprintf('Loading data ...\n');
@@ -62,32 +63,32 @@ fprintf('Loading complete.\n');
 % disp(size(Xtest));disp(size(ytest));
 
 %% Train with logistic regression
-% fprintf('Training with logistic regression ...\n');
-% logistic_reg_res = logistic_regression(X, y, Xval, yval, Xtest, ytest);
-% fprintf('Logistic regression training result: %f\n', logistic_reg_res);
-% pause;
+fprintf('Training with logistic regression ...\n');
+logistic_reg_res = logistic_regression(X, y, Xval, yval, Xtest, ytest);
+fprintf('Logistic regression training result: %f\n', logistic_reg_res);
+pause;
 
 %% Train with Neural Network
-% fprintf('Training with Neural Network ...\n');
-% nn_res = neural_network(X, y, Xval, yval, Xtest, ytest);
-% fprintf('Neural network training result: %f\n', nn_res);
-% pause;
+fprintf('Training with Neural Network ...\n');
+nn_res = neural_network(X, y, Xval, yval, Xtest, ytest);
+fprintf('Neural network training result: %f\n', nn_res);
+pause;
 
 %% Train with SVM with linear kernel or Gaussian kernel
 % fprintf('Training with SVM with linear kernel ...\n');
 % svm_linear_res = svm_with_linear_kernel(X, y, Xval, yval, Xtest, ytest);
 % fprintf('SVM with linear kernel training result: %f\n', svm_linear_res);
 % pause;
-
+% 
 fprintf('Training with SVM with gaussian kernel ...\n');
 svm_gaussian_res = svm_with_gaussian_kernel(X, y, Xval, yval, Xtest, ytest);
 fprintf('SVM with gaussian kernel training result: %f\n', svm_gaussian_res);
 pause;
 
 %% Train with Random Forest
-% fprintf('Training with Random Forest ...\n');
-% rf_res = random_forest(X, y, Xval, yval, Xtest, ytest);
-% fprintf('Random forest training result: %f\n', rf_res);
-% pause;
+fprintf('Training with Random Forest ...\n');
+rf_res = random_forest(X, y, Xval, yval, Xtest, ytest);
+fprintf('Random forest training result: %f\n', rf_res);
+pause;
 
 %% Compare the results of the several method and get a conclusion

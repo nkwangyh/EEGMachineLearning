@@ -16,7 +16,16 @@ function [ accuracy ] = random_forest(X, y, Xval, yval, Xtest, ytest)
 % end
 
 %% Validation
-[treeCnt, mtry] = rfValidateParams(X, y, Xval, yval);
+treeCnt_batch = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+mtry_batch = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+[treeCnt, mtry] = rfValidateParams(X, y, Xval, yval, treeCnt_batch, mtry_batch, 'rfValidationError.txt', 'rfMinItem.txt');
+lowestCnt = 20; interval = 1;
+[treeCnt_batch, mtry_batch] = tuningRandomForest('rfValidationError.txt', 'rfMinItem.txt', lowestCnt, interval);
+pause;
+[treeCnt, mtry] = rfValidateParams(X, y, Xval, yval, treeCnt_batch, mtry_batch, 'rfValidationError1.txt', 'rfMinItem1.txt');
+lowestCnt = 20; interval = 1;
+[treeCnt_batch, mtry_batch] = tuningRandomForest('rfValidationError1.txt', 'rfMinItem1.txt', lowestCnt, interval);
+pause;
 
 %% Training Random Forest
 model = regRF_train(X, y, treeCnt, mtry);

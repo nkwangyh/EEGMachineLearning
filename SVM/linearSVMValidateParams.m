@@ -38,7 +38,8 @@ fprintf('\nChosen C and error\n  %f  %f\n', C, error);
 % =========================================================================
 % Save the temporary result as a .mat file to simplify debugging and show
 % the primary result in a chart
-
+dlmwrite('linearSVMValidationError.txt', linearSVMValidationError, 'precision', 6, 'delimiter', ' ');
+dlmwrite('linearSVMMinItem.txt', minItem, 'precision', 6, 'delimiter', ' ');
 % sort the error matrix using @sortrows and @unique. Return the lowest 5
 % columns for detailed tuning
 
