@@ -20,15 +20,21 @@ fprintf('\nTraining SVM with RBF Kernel (this may take 1 to 2 minutes) ...\n');
 % Try different SVM Parameters here
 
 % Passible values for C and sigma
-C_batch = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30]; sigma_batch = C_batch;
-[C, sigma] = gaussianSVMValidateParams(X, y, Xval, yval, C_batch, sigma_batch, 'gaussianSVMValidationError.txt', 'gaussianSVMMinItem.txt');
-lowestCnt = 5; param_C_cnt = 50; param_sigma_cnt = 50;
+%C_batch = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 13, 20, 23, 30, 33, 40, 43, 50]; sigma_batch = C_batch;
+C_batch = [0.03, 0.1, 0.3, 1, 3, 10, 30, 40, 50]; sigma_batch = C_batch;
+[C, sigma] = gaussianSVMValidateParams(X, y, Xval, yval, C_batch, sigma_batch, 'tempData/gaussianSVMValidationError.txt', 'tempData/gaussianSVMMinItem.txt');
+lowestCnt = 4; param_C_cnt = 10; param_sigma_cnt = 10;
 [C_batch, sigma_batch] = tuningGaussianKernelSVM('gaussianSVMValidationError.txt', 'gaussianSVMMinItem.txt', lowestCnt, param_C_cnt, param_sigma_cnt);
 pause;
-[C, sigma] = gaussianSVMValidateParams(X, y, Xval, yval, C_batch, sigma_batch, 'gaussianSVMValidationError1.txt', 'gaussianSVMMinItem1.txt');
-lowestCnt = 5; param_C_cnt = 50; param_sigma_cnt = 50;
-[C_batch, sigma_batch] = tuningGaussianKernelSVM('gaussianSVMValidationError1.txt', 'gaussianSVMMinItem1.txt', lowestCnt, param_C_cnt, param_sigma_cnt);
-pause;
+% if you want to tune the parameters further, uncomment the following lines
+% [C, sigma] = gaussianSVMValidateParams(X, y, Xval, yval, C_batch, sigma_batch, 'tempData/gaussianSVMValidationError1.txt', 'tempData/gaussianSVMMinItem1.txt');
+% lowestCnt = 4; param_C_cnt = 10; param_sigma_cnt = 10;
+% [C_batch, sigma_batch] = tuningGaussianKernelSVM('gaussianSVMValidationError1.txt', 'gaussianSVMMinItem1.txt', lowestCnt, param_C_cnt, param_sigma_cnt);
+% pause;
+% [C, sigma] = gaussianSVMValidateParams(X, y, Xval, yval, C_batch, sigma_batch, 'tempData/gaussianSVMValidationError2.txt', 'tempData/gaussianSVMMinItem2.txt');
+% lowestCnt = 4; param_C_cnt = 10; param_sigma_cnt = 10;
+% [C_batch, sigma_batch] = tuningGaussianKernelSVM('gaussianSVMValidationError2.txt', 'gaussianSVMMinItem2.txt', lowestCnt, param_C_cnt, param_sigma_cnt);
+% pause;
 
 %% Predict
 model = svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma));

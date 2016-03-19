@@ -5,6 +5,7 @@ function [ C_batch, sigma_batch ] = tuningGaussianKernelSVM( gaussianSVMValidati
 % load data and show the primary result in a chart
 gaussianSVMValidationError = load(gaussianSVMValidationErrorName);
 minItem = load(gaussianSVMMinItemName);
+fprintf('\nChosen C, sigma and error\n  %f  %f  %f\n', minItem(1), minItem(2), minItem(3));
 % handling data
 C = unique(gaussianSVMValidationError(1, :), 'stable'); sigma = unique(gaussianSVMValidationError(2, :), 'stable');
 errorMatrix = reshape(gaussianSVMValidationError(3, :), length(sigma), length(C));

@@ -6,7 +6,7 @@ function [ treeCnt_batch, mtry_batch ] = tuningRandomForest( rfValidationErrorNa
 % load data and show the primary result in a chart
 rfValidationError = load(rfValidationErrorName);
 minItem = load(rfMinItemName);
-
+fprintf('\nChosen treeCnt, mtry and error percent\n  %f  %f  %f\n', minItem(1), minItem(2), minItem(3));
 % handling data
 treeCnt = unique(rfValidationError(1, :), 'stable'); mtry = unique(rfValidationError(2, :), 'stable');
 errorMatrix = reshape(rfValidationError(3, :), length(mtry), length(treeCnt));

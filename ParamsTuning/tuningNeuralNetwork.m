@@ -5,10 +5,10 @@ function [hidden_layer_size_batch, lambda_batch] = tuningNeuralNetwork(nnValidat
 % load data and show the primary result in a chart
 nnValidationError = load(nnValidationErrorName);
 minItem = load(nnMinItemName);
+%fprintf('\nChosen hiddenLayerSize, lambda and error percent\n  %f  %f  %f\n', minItem(1), minItem(2), minItem(3));
 % handling data
 hiddenSize = unique(nnValidationError(1, :), 'stable'); lambda = unique(nnValidationError(2, :), 'stable');
 errorMatrix = reshape(nnValidationError(3, :), length(lambda), length(hiddenSize));
-
 % bar3 plot
 figure;
 bar3(errorMatrix);

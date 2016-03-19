@@ -10,6 +10,7 @@ addpath('RandomForest/');
 addpath('data/');
 addpath('ParamsTuning/');
 addpath('tempData/');
+addpath('ScreenShot/');
 
 %% Load Data and Divide it into Train, Cross-validation and Test sets
 fprintf('Loading data ...\n');
@@ -56,7 +57,10 @@ Xval= randdata(train_set_size+1: train_set_size+val_set_size, 1:n);
 yval = randdata(train_set_size+1: train_set_size+val_set_size, n+1);
 Xtest = randdata(train_set_size+val_set_size+1:m, 1:n);
 ytest = randdata(train_set_size+val_set_size+1:m, n+1);
-
+save dataSet.mat X y Xval yval Xtest ytest;
+%% Leverage existing data
+% load lgregDataSet;
+% load nnDataSet;
 fprintf('Loading complete.\n');
 % disp(size(X)); disp(size(y));
 % disp(size(Xval));disp(size(yval));
@@ -75,11 +79,11 @@ fprintf('Neural network training result: %f\n', nn_res);
 pause;
 
 %% Train with SVM with linear kernel or Gaussian kernel
-% fprintf('Training with SVM with linear kernel ...\n');
-% svm_linear_res = svm_with_linear_kernel(X, y, Xval, yval, Xtest, ytest);
-% fprintf('SVM with linear kernel training result: %f\n', svm_linear_res);
-% pause;
-% 
+fprintf('Training with SVM with linear kernel ...\n');
+svm_linear_res = svm_with_linear_kernel(X, y, Xval, yval, Xtest, ytest);
+fprintf('SVM with linear kernel training result: %f\n', svm_linear_res);
+pause;
+
 fprintf('Training with SVM with gaussian kernel ...\n');
 svm_gaussian_res = svm_with_gaussian_kernel(X, y, Xval, yval, Xtest, ytest);
 fprintf('SVM with gaussian kernel training result: %f\n', svm_gaussian_res);

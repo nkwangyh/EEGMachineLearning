@@ -25,18 +25,26 @@ lambda = 0.0001;            % weight decay parameter
 
 %% Validation
 
-hidden_layer_size_batch = [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28];
-lambda_batch = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
+hidden_layer_size_batch = [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 29, 30, 31, 32];
+lambda_batch = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 13, 20, 23, 30, 33, 40, 43, 50];
 maxIter = 100;
 [hidden_layer_size, lambda, maxIter] = nnValidateParams(X, y, Xval, yval, hidden_layer_size, input_layer_size, num_labels, ...
-    maxIter, hidden_layer_size_batch, lambda_batch, 'nnValidationError.txt', 'nnMinItem.txt');
-lowestCnt = 4; paramCnt = 50;
+    maxIter, hidden_layer_size_batch, lambda_batch, 'tempData/nnValidationError.txt', 'tempData/nnMinItem.txt');
+lowestCnt = 6; paramCnt = 50;
+maxIter = 200;
 [hidden_layer_size_batch, lambda_batch] = tuningNeuralNetwork('nnValidationError.txt', 'nnMinItem.txt', lowestCnt, paramCnt);
-
+pause;
 [hidden_layer_size, lambda, maxIter] = nnValidateParams(X, y, Xval, yval, hidden_layer_size, input_layer_size, num_labels, ...
-    maxIter, hidden_layer_size_batch, lambda_batch, 'nnValidationError1.txt', 'nnMinItem1.txt');
+    maxIter, hidden_layer_size_batch, lambda_batch, 'tempData/nnValidationError1.txt', 'tempData/nnMinItem1.txt');
 lowestCnt = 4; paramCnt = 50;
 [hidden_layer_size_batch, lambda_batch] = tuningNeuralNetwork('nnValidationError1.txt', 'nnMinItem1.txt', lowestCnt, paramCnt);
+pause;
+lowestCnt = 4; paramCnt = 100;
+maxIter = 200;
+[hidden_layer_size, lambda, maxIter] = nnValidateParams(X, y, Xval, yval, hidden_layer_size, input_layer_size, num_labels, ...
+    maxIter, hidden_layer_size_batch, lambda_batch, 'tempData/nnValidationError2.txt', 'tempData/nnMinItem2.txt');
+lowestCnt = 4; paramCnt = 200;
+[hidden_layer_size_batch, lambda_batch] = tuningNeuralNetwork('nnValidationError2.txt', 'nnMinItem2.txt', lowestCnt, paramCnt);
 pause;
 
 %% Training NN

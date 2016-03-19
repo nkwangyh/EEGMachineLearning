@@ -5,9 +5,16 @@ function [lambda_batch] = tuningLogisticReg(lrValidationErrorName, minItemName, 
 % load data and show the primary result in a chart
 lrValidationError = load(lrValidationErrorName);
 minItem = load(minItemName);
+fprintf('\nChosen lambda, error percent and maxIter\n  %f  %f\n', minItem(1), minItem(2));
 % plot
 figure; hold on;
 plot(lrValidationError(1, :), lrValidationError(2, :));
+miny = min(lrValidationError(2, :)); maxy = max(lrValidationError(2, :)); diffy = maxy - miny;
+minx = min(lrValidationError(1, :)); maxx = max(lrValidationError(1, :)); diffx = maxx - minx;
+shrinkRate = 20;
+if miny ~= maxy
+    axis([minx - diffx/shrinkRate, maxx + diffx/shrinkRate, miny - diffy/shrinkRate, maxy + diffy/shrinkRate]);
+end
 xlabel('lambda'); ylabel('error rate');
 plot(minItem(1),  minItem(2), 'rx', 'MarkerSize', 10, 'LineWidth', 2);
 hold off;
