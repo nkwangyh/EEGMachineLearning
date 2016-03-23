@@ -5,7 +5,7 @@ function [lambda_batch] = tuningLogisticReg(lrValidationErrorName, minItemName, 
 % load data and show the primary result in a chart
 lrValidationError = load(lrValidationErrorName);
 minItem = load(minItemName);
-fprintf('\nChosen lambda, error percent and maxIter\n  %f  %f\n', minItem(1), minItem(2));
+fprintf('\nChosen lambda and error percent\n  %f  %f\n', minItem(1), 100*minItem(2));
 % plot
 figure; hold on;
 plot(lrValidationError(1, :), lrValidationError(2, :));
